@@ -6,7 +6,6 @@
 
 class Block:
     ''' A collection of cells on a grid in the form of various tetrominoes in which the player can manipulate and control
-    Blocks have the following properties
     
     Static Attributes:
         - ROWS : The number of rows in a grid
