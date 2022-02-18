@@ -16,7 +16,7 @@ class Grid:
         - ROWS : The number of rows in the grid
         - GRIDS : A list of each instance of Grid
         - BLOCKS : A list of the possible block types (e.g., I-block)
-        - NEXT_BLOCKS : The list used in the generation of  
+        - NEXT_BLOCKS : The list used in the generation of future blocks, obeying bag-like rules
         - LEVEL : The game's current level
         - SPEED : The game's current soft drop rate
         - __SCORE : The scoring increment values based on the quantity of lines immediately cleared
@@ -188,7 +188,7 @@ class Grid:
         self.__surface.blit(score_value, (self.__x - 100, self.__y + self.__height // 1.25 + 20))
 
     def swapHold(self):
-        '''Swaps the current block with the currently held block; a process called holding. Can only occur once before this player locks a block'''
+        '''Swaps the current block with the currently held block; a process called holding. Can only occur once a "turn" before it's locked in place for the remainder of this player's "turn"'''
 
         if not self.__is_held:
             self.__is_held = True
@@ -210,23 +210,23 @@ class Grid:
             self.drawHold()
     
     def getX(self):
-        '''Returns the grid's x cooridnate '''
+        '''Returns the grid's x-coordinate '''
 
         return self.__x
 
     def setX(self, x):
-        '''Sets the grid's x coordinate to *x* if x is within the bounds of the surface'''
+        '''Sets the grid's x-coordinate to *x* if x is within the bounds of the surface'''
 
         if 0 <= x <= self.__surface.get_width() - self.__width:
             self.__x = x
     
     def getY(self):
-        '''Returns the grid's y coordinate'''
+        '''Returns the grid's y-coordinate'''
 
         return self.__y
 
     def setY(self, y):
-        '''Sets the grid's y coordiante to *y* if y is within the bounds of the surface'''
+        '''Sets the grid's y-coordiante to *y* if y is within the bounds of the surface'''
         if 0 <= y <= self.__surface.get_height() - self.__height:
             self.__y = y
     
@@ -253,10 +253,10 @@ class Grid:
             self.__cellLength = height // Grid.ROWs
 
     def drawGrid(self):
-        '''If the the player has not won or lost, it draws the matrice of rectangles called __grid and draws the grid lines. If the player has lost, draws a big red rectangle with a label on it saying "You Lose". If the player has won, draws a big green rectangle with a label on it saying "You Win". '''
+        '''If the the player has not won or lost, it draws the matrix of rectangles called __grid and draws the gridlines. If the player has lost, draws a big red rectangle with a label on it saying "You Lose". If the player has won, draws a big green rectangle with a label on it saying "You Win". '''
         
         # Checking if the game is still in progress
-        if not self.lose and not self.win:
+        if not (self.lose or self.win):
             for row in range(len(self.__grid)):
                 for col in range(len(self.__grid[row])):
                     pygame.draw.rect(self.__surface, self.__grid_colours[row][col], self.__grid[row][col])
@@ -314,7 +314,7 @@ class Grid:
             self.setCell(coords[0], coords[1], self.block.colour)
     
     def lock(self):
-        '''Manages a timer for when the current block should be either moveable or unmoveable when on the ground. Generates a new block if this block is locked (i.e., made unmovable)'''
+        '''Manages a timer for when the current block should be either movable or immovable ("locked") when on the ground. Generates a new block if this block is locked'''
 
         if self.timer >= Grid.SPEED * 3 and not self.block.collisionDetect(r_off=-1):
             
@@ -332,7 +332,7 @@ class Grid:
             self.timer_running = True
     
     def instantLock(self):
-        '''Instantly locks the current block to the grid, clears and sends any complete lines. Generates a new block if this block is locked (i.e., made unmovable)'''
+        '''Instantly locks the current block to the grid; clears and sends any complete lines. Generates a new block if this block is locked'''
 
         self.__getNextBlock()
         self.__clearLines()
@@ -343,10 +343,10 @@ class Grid:
         self.timer = 0
     
     def __receiveLines(self):
-        '''Detects and collects which rows in the grid will be moved and moves them up by the number of line sent. The empty space will be replaced by gray blocks which represent garbage lines. There will be a randomly selected column in which there will be no garbage lines to represent messiness. If the number of rows moved + the number of lines recieved exeeds or equals the number of rows on the grid, the player loses.'''
+        '''Detects and collects which rows in the grid will be moved and moves them up by the number of line sent. The empty space will be replaced by gray blocks which represent garbage lines. There will be a randomly selected column in which there will be no garbage lines to represent messiness. If the sum of the number of rows moved and the number of lines recieved exeeds or equals the number of rows on the grid, the player loses.'''
         moved_rows = []
 
-        self.lines_received = abs(self.lines_received) # TODO Bebug attempt
+        self.lines_received = abs(self.lines_received) # TODO Further investigate debugging potential
 
         for i in range(Grid.ROWS):
             moveable = False
