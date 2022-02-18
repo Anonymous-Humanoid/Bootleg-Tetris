@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # Andy Luo and Matthew Simpson
-# 335776720 and 340905215, respectfully
 # Bootleg Tetris
 # To create a multiplayer Tetris experience
 
