@@ -63,7 +63,7 @@ def startGame(display):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                raise SystemExit
+                exit()
 
             elif not (grid_1.win or grid_2.win):
                 
