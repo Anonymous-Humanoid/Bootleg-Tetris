@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     # Setting up display (750 x 500px)
     display = pygame.display.set_mode((750, 500))
-    pygame.display.set_caption('Tetris')
+    pygame.display.set_caption('Bootleg Tetris')
 
     # Running the game
     startGame(display)
