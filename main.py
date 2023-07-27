@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Andy Luo and Matthew Simpson
 # Bootleg Tetris
-# To create a multiplayer Tetris experience
+# Creates a multiplayer Tetris experience
 
 # Player 1 controls
 # W     : rotate CW
@@ -13,15 +13,19 @@
 # G     : make block go brr to ground
 # H     : hold block for later
 
-# Player 2 controls
-# UP    : rotate CW
-# DOWN  : move down once
-# LEFT  : left
-# RIGHT : right
+# Player 2 controls (assumes numlock is off)
+# NUM 8 : rotate CW
+# NUM 5 : move down once
+# NUM 4 : left
+# NUM 6 : right
 # I     : 180 rotation
 # J     : rotate CCW
 # K     : make block go brr to ground
 # L     : hold block for later
+
+# Hiding pygame support message
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 
 # import necessary modules
 import pygame
@@ -36,7 +40,7 @@ if __name__ == '__main__':
 
     # Setting up display (750 x 500px)
     display = pygame.display.set_mode((750, 500))
-    pygame.display.set_caption('Bootleg Tetris')
+    pygame.display.set_caption('Tetris')
 
     # Running the game
     startGame(display)
