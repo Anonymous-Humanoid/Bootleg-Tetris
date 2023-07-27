@@ -13,7 +13,7 @@
 # G     : make block go brr to ground
 # H     : hold block for later
 
-# Player 2 controls (assumes numlock is off)
+# Player 2 controls
 # NUM 8 : rotate CW
 # NUM 5 : move down once
 # NUM 4 : left
