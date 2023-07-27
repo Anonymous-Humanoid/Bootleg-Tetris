@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Andy Luo and Matthew Simpson
 # Bootleg Tetris
-# To create a multiplayer Tetris experience
+# Creates a multiplayer Tetris experience
 
 # import necessary modules
 import pygame
@@ -29,10 +29,10 @@ def startGame(display):
         pygame.K_h     : grid_1.swapHold,
 
         # Player 2 controls
-        pygame.K_UP    : grid_2.block.rotCW,
-        pygame.K_DOWN  : grid_2.block.moveDown,
-        pygame.K_LEFT  : grid_2.block.moveLeft,
-        pygame.K_RIGHT : grid_2.block.moveRight,
+        pygame.K_KP8   : grid_2.block.rotCW,
+        pygame.K_KP5   : grid_2.block.moveDown,
+        pygame.K_KP4   : grid_2.block.moveLeft,
+        pygame.K_KP6   : grid_2.block.moveRight,
         pygame.K_i     : grid_2.block.rotFull,
         pygame.K_j     : grid_2.block.rotCCW,
         pygame.K_k     : grid_2.block.hardDrop,
@@ -63,7 +63,7 @@ def startGame(display):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                raise SystemExit
 
             elif not (grid_1.win or grid_2.win):
                 
